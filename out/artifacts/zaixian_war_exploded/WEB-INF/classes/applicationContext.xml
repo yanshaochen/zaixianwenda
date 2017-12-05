@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+">
+    <!-- 01.包扫描器和注解驱动 -->
+    <context:component-scan base-package="com.giit"/>
+    <mvc:annotation-driven/>
+    <!-- 02.识别jdbc.properties文件 -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <!-- 03.alibaba数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!--<property name="maxActive" value="20"/>-->
+    </bean>
+    <!-- 04.工厂配置 datasource mybatis-config -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+    </bean>
+    <!-- 05.扫描整个Dao层，注入Mapper-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" p:basePackage="com.giit.dao"/>
+    <!-- 06.transactionManager -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" p:dataSource-ref="dataSource"/>
+    <!-- 07.AspectJ AOP 配置事务 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!--事务的隔离级别和传播行为在这里设置-->
+            <tx:method name="addBook" isolation="DEFAULT" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <aop:pointcut id="pointcut" expression="execution(* *..impl.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
+    </aop:config>
+</beans>

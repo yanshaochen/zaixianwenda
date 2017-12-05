@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="last_test@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
+    <root id="1"/>
+    <schema id="2" parent="1" name="last_test">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="information_schema"/>
+    <schema id="4" parent="1" name="interview"/>
+    <schema id="5" parent="1" name="mysql"/>
+    <schema id="6" parent="1" name="performance_schema"/>
+    <schema id="7" parent="1" name="sakila"/>
+    <schema id="8" parent="1" name="shiro"/>
+    <schema id="9" parent="1" name="smbmst14"/>
+    <schema id="10" parent="1" name="sys"/>
+    <schema id="11" parent="1" name="t14_spring_course"/>
+    <schema id="12" parent="1" name="teaching_management_system"/>
+    <schema id="13" parent="1" name="tms"/>
+    <schema id="14" parent="1" name="world"/>
+    <schema id="15" parent="1" name="y2duikang"/>
+    <table id="16" parent="2" name="answers"/>
+    <table id="17" parent="2" name="questions"/>
+    <column id="18" parent="16" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="19" parent="16" name="ansContent">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="20" parent="16" name="ansDate">
+      <Position>3</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="21" parent="16" name="qid">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <key id="22" parent="16" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="23" parent="17" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="24" parent="17" name="title">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="25" parent="17" name="detailDesc">
+      <Position>3</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <column id="26" parent="17" name="answerCount">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="27" parent="17" name="lastModified">
+      <Position>5</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <key id="28" parent="17" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>

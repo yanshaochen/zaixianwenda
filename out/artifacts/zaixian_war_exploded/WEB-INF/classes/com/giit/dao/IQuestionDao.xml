@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.giit.dao.IQuestionDao">
+    <!--查询所有提问-->
+    <select id="showQuestions" resultType="com.giit.entity.Questions">
+        select * from questions order by lastModified DESC
+    </select>
+    <!--保存提问-->
+    <insert id="saveQuestion">
+        insert into questions VALUES (DEFAULT ,#{title},#{detaildesc},0,now())
+    </insert>
+    <!--查找带answer的提问by questionId-->
+    <resultMap id="question_answer" type="com.giit.entity.Questions" autoMapping="false">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="detaildesc" column="detailDesc"/>
+        <collection property="answers" ofType="com.giit.entity.Answers">
+            <result property="ansdate" column="ansDate"/>
+            <result property="anscontent" column="ansContent"/>
+        </collection>
+    </resultMap>
+    <select id="getQuestionById" resultMap="question_answer">
+        select * from questions q LEFT JOIN answers a ON q.id=a.qid where q.id=#{qid} order by ansDate desc
+    </select>
+</mapper>
